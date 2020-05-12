@@ -1,7 +1,9 @@
 import psutil 
 import os.path
 from os import path
+import time
 #import subprocess
+
 
 def checkIfProcessRunning(processName):
     for proc in psutil.process_iter():
@@ -27,6 +29,7 @@ def init():
         os.rename(r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe",r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe1")
         try:
             while(psutil.pid_exists(checkPid())):
+                time.sleep(10)
                 pass
         except:
             os.rename(r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe1",r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe")

@@ -1,2 +1,2 @@
-# loupo_utils
-Utility scripts
+# Loupeznik's utility scripts
+Utility scripts for partial system automation

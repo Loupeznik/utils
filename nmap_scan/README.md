@@ -1,5 +1,5 @@
 <h1>Nmap scanner</h1>
-> Utility for portscanning operations with nmap
+Utility for portscanning operations with nmap
 
 ## Functions
 

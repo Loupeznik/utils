@@ -4,7 +4,7 @@
 ## NEEDS TESTING ##
 ###################
 
-cmd="$(certbot certificates)"
+cmd="$(certbot certificates 2>/dev/null)"
 domains=("dzarsky.eu" "rtl.sytes.net") #certificates for hosts in order shown with "$cmd"
 re="VALID: [0-9]{1,2}[^0-9]"
 #nr=0

@@ -1,0 +1,13 @@
+[Unit]
+Description=TS3AudioBot
+
+[Service]
+Type=simple
+WorkingDirectory=/home/teamspeak/ts3audiobot
+ExecStart=/usr/bin/dotnet /home/teamspeak/ts3audiobot/TS3AudioBot.dll
+User=teamspeak
+Usergroup=teamspeak
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

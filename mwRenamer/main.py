@@ -20,19 +20,21 @@ def checkPid():
         return i.pid
 
 def init():
-    if (checkIfProcessRunning('ModernWarfare.exe') and path.exists(r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe")):
+    codPath = r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe"
+    codPathAlt = r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe1"
+    if (checkIfProcessRunning('ModernWarfare.exe') and path.exists(codPath)):
         #přejmenovat soubor
         #čekat na ukončení procesu
         #přejmenovat soubor
         #prompt pro opakování nebo zavření programu
         print('Proces je zapnutý')
-        os.rename(r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe",r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe1")
+        os.rename(codPath,codPathAlt)
         try:
             while(psutil.pid_exists(checkPid())):
                 time.sleep(10)
                 pass
         except:
-            os.rename(r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe1",r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe")
+            os.rename(codPathAlt,codPath)
             print('Proces je vypnutý. Resetovat?')
             inp = input()
             if inp == 'y':
@@ -41,9 +43,9 @@ def init():
                 exit()
 
     else:
-        if path.exists(r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe1"):
+        if path.exists(codPathAlt):
             #přejmenovat soubor
-            os.rename(r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe1",r"G:\Battle.net\cod\Call of Duty Modern Warfare\ModernWarfare.exe")
+            os.rename(codPathAlt,codPath)
         else:
             print('Proces nenalezen. Resetovat?')
             inp = input()

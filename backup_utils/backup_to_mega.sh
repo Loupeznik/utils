@@ -7,7 +7,7 @@ db_folder="/home/pi/backup/db"
 temp_folder="/home/pi/scripts/temp"
 free=""
 if [[ $folders == *$cur_month* ]]; then
-	mega-logout 2>/dev/null
+	mega-logout 1>/dev/null
 	echo MEGA BACKUP -- Záloha neúspěšná (záloha pro tento měsíc již existuje)
 	exit 0
 else

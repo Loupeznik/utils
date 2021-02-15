@@ -102,7 +102,7 @@ extract ()
       *.zip)       unzip $1     ;;
       *.7z)        7z x $1      ;;
       *.tar.xz)    tar xf $1    ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
+      *)           echo "'$1' cannot be extracted via extract()" ;;
     esac
   else
     echo "'$1' is not a valid file"
@@ -110,29 +110,26 @@ extract ()
 }
 
 # Aliases
-alias cconvert="dotnet /opt/currencyConverter/CurrencyConverter.dll"
-alias stat="git status"
+alias cconvert="dotnet /opt/currencyConverter/CurrencyConverter.dll" #starts currency converter (https://github.com/Loupeznik/CurrencyConverter)
+alias gstat="git status"
+alias gadd="git add"
+alias gcomm="git commit"
+alias gpull="git pull"
+alias gundo="git reset --soft HEAD~1"
 alias www="cd /var/www"
 alias home="cd ~"
 alias a2start="sudo service apache2 start"
+alias a2restart="sudo service apache2 restart"
 alias chromekys="pkill chrome"
-alias pulsekys="pulseaudio -k"
+alias fixaudio="pulseaudio -k"
 alias sqlogin="sudo mysql -uroot"
-
-# Colorize grep output (good for log files)
+alias cfg="nano ~/.zshrc"
+alias serve="php artisan serve"
+alias emulator="flutter emulators --launch Pixel_3a_API_30_x86"
+# Colorize grep output
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-source /home/dominicc/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Misc
+source $HOME/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

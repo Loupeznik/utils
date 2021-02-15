@@ -51,6 +51,7 @@ chown -R www-data:www-data /home/teamspeak/ts3audiobot/music
 # ACTIVATE SERVICES, CLEAN UP
 systemctl enable ts3audiobot.service
 update-rc.d teamspeak defaults
+touch /home/teamspeak/teamspeak3/.ts3server_license_accepted
 rm -rf /tmp/ts3-setup/
 apt autoremove
 # START SERVICES

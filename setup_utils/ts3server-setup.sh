@@ -12,7 +12,7 @@ fi
 
 # UPGRADE AND INSTALL PACKAGES
 apt update && apt upgrade -y
-apt install python3 python3-pip php php-curl apache2 certbot python-certbot-apache composer libopus-dev ffmpeg wget curl unzip tar git -y
+apt install python3 python3-pip php php-curl apache2 composer libopus-dev ffmpeg wget curl unzip tar git -y
 # SET UP DIRECTORIES
 mkdir /home/teamspeak/
 useradd teamspeak -d /home/teamspeak
@@ -22,7 +22,7 @@ cd /tmp/ts3-setup/
 wget https://github.com/Splamy/TS3AudioBot/releases/download/0.11.0/TS3AudioBot_dotnet_core_3.1.zip
 wget https://download.visualstudio.microsoft.com/download/pr/f54a9098-69e6-4914-8fa8-42cb4ed05e65/9daae40d4a0ea4ad7aa2fc014b5f20db/dotnet-runtime-3.1.12-linux-x64.tar.gz
 mkdir /opt/dotnet
-tar -zxvf dotnet-runtime-3.1.12-linux-x64.tar.gz -C /opt/dotnet
+tar -zxf dotnet-runtime-3.1.12-linux-x64.tar.gz -C /opt/dotnet
 mv dotnet/* /opt/dotnet
 ln -s /opt/dotnet/dotnet /usr/bin/dotnet
 mkdir /home/teamspeak/ts3audiobot
@@ -33,7 +33,7 @@ chmod a+rx /usr/local/bin/youtube-dl
 # DOWNLOAD TEAMSPEAK3 SERVER
 mkdir /home/teamspeak/teamspeak3
 wget https://files.teamspeak-services.com/releases/server/3.13.3/teamspeak3-server_linux_amd64-3.13.3.tar.bz2
-tar -xvf teamspeak3-server_linux_amd64-3.13.3.tar.bz2
+tar -xf teamspeak3-server_linux_amd64-3.13.3.tar.bz2
 mv teamspeak3-server_linux_amd64/* /home/teamspeak/teamspeak3
 chown -R teamspeak:teamspeak /home/teamspeak/
 # SET UP SERVICES

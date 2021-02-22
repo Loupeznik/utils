@@ -9,7 +9,7 @@ stime=$(date +"%s")
 echo "[MEGA BACKUP] Starting backup script"
 if [[ $folders == *$cur_month* ]]; then
 	mega-logout 1>/dev/null
-	echo "[MEGA BACKUP] Backup not sucessful (backup for this month already exists)"
+	echo "[MEGA BACKUP] Backup not successfull (backup for this month already exists)"
 	exit 0
 else
 	[ ! -d "$temp_folder" ] && mkdir -p "$temp_folder"
@@ -21,7 +21,7 @@ else
 		fi
 	done
 	echo "[MEGA BACKUP] Backing up scripts directory"
-	tar -czf "$temp_folder"/scripts.tar.gz -C /home/$USER/scripts/ *.sh *.py *.rb *.go 2>/dev/null
+	tar -czf "$temp_folder"/scripts.tar.gz -C /home/$USER/scripts/ *.sh *.py 2>/dev/null
 	mega-put -q "$temp_folder"/scripts.tar.gz /"$cur_month"/
 	# z nějakého kvalitního důvodu nefunguje -q přepínač vždy na posledním mega-put příkazu #
 	# vyřešeno přesměrováním všeho outputu do /dev/null 				        #
@@ -30,7 +30,7 @@ else
 	mega-put "$temp_folder"/www.tar.gz /"$cur_month"/ &>/dev/null
 	echo "[MEGA BACKUP] Removing backup archives from local storage"
 	rm "$temp_folder"/*
-	echo "[MEGA BACKUP] Backup successful for $cur_month"
+	echo "[MEGA BACKUP] Backup successfull for $cur_month"
 fi
 etime=$(date +"%s")
 timediff=$(($etime-$stime))

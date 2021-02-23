@@ -34,5 +34,5 @@ else
 fi
 etime=$(date +"%s")
 timediff=$(($etime-$stime))
-echo "[MEGA BACKUP] Script took $(($difftimelps / 60)) minutes and $(($difftimelps % 60)) seconds to finish"
+echo "[MEGA BACKUP] Script took $(($timediff / 60)) minutes and $(($timediff % 60)) seconds to finish"
 mega-logout 1>/dev/null

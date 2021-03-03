@@ -45,6 +45,10 @@ Various utility scripts for webserver workflow.
 
 Custom dotfiles for Linux
 
+### prometheus
+
+Configuration and service files for Prometheus (monitoring system)
+
 ## Unmaintained or not very useful utilities
 
 

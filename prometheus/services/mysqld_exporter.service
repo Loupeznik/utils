@@ -1,0 +1,11 @@
+[Unit]
+Description=MySQLd Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prom
+ExecStart=/opt/mysqld_exporter/mysqld_exporter
+
+[Install]
+WantedBy=default.target

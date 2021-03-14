@@ -3,7 +3,7 @@ global:
   scrape_interval:     15s
   evaluation_interval: 15s
   external_labels:
-    origin_prometheus: raspberrypi-server
+    origin_prometheus: <SERVER_NAME>
 
 # Alertmanager configuration
 alerting:
@@ -26,9 +26,9 @@ scrape_configs:
     static_configs:
     - targets: ['localhost:9100']
 
-#  - job_name : 'mysqld_exporter'
-#    static configs:
-#    - targets: ['localhost:3306']
+  - job_name : 'mysqld_exporter'
+    static configs:
+    - targets: ['localhost:9104']
 
 # Grafana Cloud
 

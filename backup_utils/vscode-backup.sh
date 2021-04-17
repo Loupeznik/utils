@@ -17,7 +17,7 @@ if [ -d $out_folder ]; then
 	echo "[GENERAL] Backup for today already exists, do you wish to remove the previous backup?"
 	echo "[GENERAL] Press y to continue, any other key to exit"
 	while : ; do
-	read -n 1 k <&1
+		read -n 1 k <&1
 	if [[ $k = y ]]; then
 		echo ""
 		echo "[GENERAL] Removing previous backup and performing a new one"
@@ -33,10 +33,10 @@ fi
 mkdir $out_folder
 echo "[SETTINGS] Backing up your config files"
 if [ ! -f $cfg_folder/keybindings.json ]; then
-echo "[SETTINGS] Keybindings config file not found, backing up settings.json only"
-tar -czf $out_folder/config.tar.gz -C $cfg_folder settings.json
+	echo "[SETTINGS] Keybindings config file not found, backing up settings.json only"
+	tar -czf $out_folder/config.tar.gz -C $cfg_folder settings.json
 else
-tar -czf $out_folder/config.tar.gz -C $cfg_folder settings.json keybindings.json
+	tar -czf $out_folder/config.tar.gz -C $cfg_folder settings.json keybindings.json
 fi
 echo "[EXTENSIONS] Exporting your extensions"
 code --list-extensions | xargs -L 1 echo code --install-extension > $out_folder/code-extensions-install

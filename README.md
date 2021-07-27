@@ -49,8 +49,12 @@ Custom dotfiles for Linux
 
 Configuration and service files for Prometheus (monitoring system)
 
-## Unmaintained or not very useful utilities
+### cloud_utils
 
+Scripts useful with emphemeral cloud machines (eg. Google Cloud Shell), mainly used for setting up the machine's temporary working environment and executing
+various scripts and tasks.
+
+## Unmaintained or not very useful utilities
 
 ### mwRenamer
 

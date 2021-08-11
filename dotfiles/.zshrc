@@ -10,7 +10,7 @@ export ZSH=$HOME/.oh-my-zsh
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
-plugins=(git zsh-autosuggestions)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -71,7 +71,6 @@ larasetup ()
 }
 
 # Aliases
-alias cconvert="dotnet /opt/currencyConverter/CurrencyConverter.dll" #starts currency converter (https://github.com/Loupeznik/CurrencyConverter)
 alias gstat="git status"
 alias gadd="git add"
 alias gcomm="git commit"
@@ -101,6 +100,3 @@ alias fgrep='fgrep --color=auto'
 
 # Disable .NET Telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-
-# Misc
-source $HOME/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

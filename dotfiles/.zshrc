@@ -86,6 +86,7 @@ alias cfg="nano ~/.zshrc"
 alias serve="php artisan serve"
 alias emulator="flutter emulators --launch Pixel_3a_API_30_x86"
 alias updates="sudo apt update && sudo apt list --upgradable"
+alias sshagent="eval '$(ssh-agent -s)'"
 
 # Apache2 aliases
 alias a2start="sudo service apache2 start"

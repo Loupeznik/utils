@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # INSTALL NEEDED PACKAGES
-apt install ocrmypdf tesseract-orc-ces
+apt install ocrmypdf tesseract-ocr-ces
 wget https://github.com/schollz/croc/releases/download/v9.2.0/croc_9.2.0_Linux-64bit.deb
 dpkg -i croc_9.1.4_Linux-64bit.deb
 rm croc_9.1.4_Linux-64bit.deb

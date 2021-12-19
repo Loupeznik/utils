@@ -54,6 +54,10 @@ Configuration and service files for Prometheus (monitoring system)
 Scripts useful with emphemeral cloud machines (eg. Google Cloud Shell), mainly used for setting up the machine's temporary working environment and executing
 various scripts and tasks.
 
+### flutter
+
+Collection of scripts to automate publishing of Flutter applications
+
 ## Unmaintained or not very useful utilities
 
 ### mwRenamer

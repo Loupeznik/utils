@@ -20,8 +20,7 @@ Import-Module powershell-yaml
 
 # Set variables
 
-$appName = "myapp"
-$bucket = Get-GcsBucket -Name "<yourbucketname>"
+$bucket = Get-GcsBucket -Name "<yourbucketname>" # Set this
 $filePath = "pubspec.yaml"
 
 if (-not (Test-Path -Path $filePath -PathType Leaf)) {
@@ -35,11 +34,13 @@ $content = [string]::Empty
 foreach ($line in (Get-Content $filePath)) { 
     $content += "`n" + $line 
 }
+
 $version = (ConvertFrom-YAML $content)["version"]
+$appName = (ConvertFrom-YAML $content)["name"]
 
 # Build
 
-Set-Location -Path "C:\Dev\$appname"
+Set-Location -Path "C:\Dev\$appname" # Set this
 flutter build apk
 
 # Test

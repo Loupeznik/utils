@@ -30,14 +30,7 @@ Scripts for automatically setting up various Linux programs and utilities. Writt
 
 Scripts for working with TeamSpeak3 server logs and TeamSpeak3 server service configuration files.
 
-### www_utils
-
-Various utility scripts for webserver workflow.
-
-- certbot_renew
-  - Renewal script for Let's Encrypt SSL certificates with certbot. This was not tested in production, thus it's reliability is questionable.
-- foldercheck_db
-  - Checks files in a folder against records in MySQL database and removes files which are not present in the records.
+### pdf_utils
 - pdfmerger
   - Merges various PDF files
 

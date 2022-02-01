@@ -22,9 +22,7 @@ else
 	done
 	echo "[MEGA BACKUP] Backing up scripts directory"
 	tar -czf "$temp_folder"/scripts.tar.gz -C /home/$USER/scripts/ *.sh *.py 2>/dev/null
-	mega-put -q "$temp_folder"/scripts.tar.gz /"$cur_month"/
-	# z nějakého kvalitního důvodu nefunguje -q přepínač vždy na posledním mega-put příkazu #
-	# vyřešeno přesměrováním všeho outputu do /dev/null 				        #
+	mega-put -q "$temp_folder"/scripts.tar.gz /"$cur_month"/			        #
 	echo "[MEGA BACKUP] Backing up www directory"
 	tar -czf "$temp_folder"/www.tar.gz -C /var/ www 2>/dev/null
 	mega-put "$temp_folder"/www.tar.gz /"$cur_month"/ &>/dev/null

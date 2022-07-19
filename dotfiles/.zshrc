@@ -54,7 +54,7 @@ extract ()
 # Setup a local environment for Laravel development
 # for git cloned repos.
 # Use --database switch to migrate and seed the database.
-larasetup ()
+laravel-setup ()
 {
   if [ -e './artisan' ]; then
     composer install
@@ -87,6 +87,7 @@ alias serve="php artisan serve"
 alias emulator="flutter emulators --launch Pixel_3a_API_30_x86"
 alias updates="sudo apt update && sudo apt list --upgradable"
 alias sshagent="eval '$(ssh-agent -s)'"
+alias c="code ."
 
 # Apache2 aliases
 alias a2start="sudo service apache2 start"

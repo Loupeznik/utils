@@ -16,7 +16,7 @@ fi
 package=$(apt-cache search --names-only "^tesseract-ocr-$1")
 
 if [[ -z "$package" ]]; then
-   echo "[ERROG] Package for specified language not found"
+   echo "[ERROR] Package for specified language not found"
 fi
 
 # INSTALL NEEDED PACKAGES

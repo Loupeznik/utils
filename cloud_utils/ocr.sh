@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 # CHECK IF SCRIPT IS RUN AS ROOT
 if [[ $EUID -ne 0 ]]; then
@@ -6,12 +6,24 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+# Check if arguments are present
+if [[ $# -eq 0 ]]; then
+    echo "[ERROR] No arguments supplied - Specify the OCR language as the first argument"
+    exit 1
+fi
+
+# Check if language exists
+package=$(apt-cache search --names-only "^tesseract-ocr-$1")
+
+if [[ -z "$package" ]]; then
+   echo "[ERROG] Package for specified language not found"
+fi
+
 # INSTALL NEEDED PACKAGES
-apt install ocrmypdf tesseract-ocr-ces
-wget https://github.com/schollz/croc/releases/download/v9.2.0/croc_9.2.0_Linux-64bit.deb
-dpkg -i croc_9.1.4_Linux-64bit.deb
-rm croc_9.1.4_Linux-64bit.deb
+echo "[INFO] Installing packages"
+apt install -y ocrmypdf tesseract-ocr-$1 &>/dev/null
 
 # SET ORIGIN FILE LOCATION AND BEGIN OCR
 read -p "Enter a PDF location: " input
-ocrmypdf -l ces $input output.pdf
+echo "[INFO] Performing OCR on $input"
+ocrmypdf -l $1 $input output.pdf

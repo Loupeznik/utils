@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+export PATH=$HOME/.local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -88,6 +90,7 @@ alias emulator="flutter emulators --launch Pixel_3a_API_30_x86"
 alias updates="sudo apt update && sudo apt list --upgradable"
 alias sshagent="eval '$(ssh-agent -s)'"
 alias c="code ."
+alias ap="ansible-playbook"
 
 # Apache2 aliases
 alias a2start="sudo service apache2 start"

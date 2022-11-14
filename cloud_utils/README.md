@@ -7,4 +7,11 @@ various scripts and tasks.
 
 ### OCR script
 
-This script is used for OCR via Tesseract. Also downloads and sets up [croc](https://github.com/schollz/croc) for convenient file transfers. Default OCR locale is set to *Czech (ces)* in this script. Works with Debian-based systems. Non-debian version might be available at a later date.
+This script is used for OCR via Tesseract. OCR locale must be supplied via an argument. Works with Debian-based systems. Non-debian version might be available at a later date.
+
+Usage:
+
+```bash
+chmod +x ocr.sh
+./ocr.sh ces
+```

@@ -12,8 +12,9 @@ sudo docker run -e AZP_URL=https://dev.azure.com/organization \
 -e AZP_TOKEN=token \
 -e AZP_AGENT_NAME=hostname \
 -e AZP_POOL=test \
--v /opt:/opt \ 
--d docker-devops-agent:latest
+-v /opt:/opt \
+--name az-devops-agent \
+-d --restart=unless-stopped docker-devops-agent:latest
 ```
 
-For architectures other than x64, refer to Microsoft documentation and change the `TARGETARCH` environment variable in the Dockerfile.
+For architectures other than x64, refer to [Microsoft documentation](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops#create-and-build-the-dockerfile-1) and change the `TARGETARCH` environment variable in the Dockerfile.

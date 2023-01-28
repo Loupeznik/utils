@@ -1,0 +1,47 @@
+FROM composer:latest as composer
+
+FROM ubuntu:20.04 as final
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
+    apt-transport-https \
+    apt-utils \
+    ca-certificates \
+    curl \
+    git \
+    iputils-ping \
+    jq \
+    lsb-release \
+    software-properties-common \
+    zip \
+    unzip \
+    software-properties-common
+
+RUN add-apt-repository ppa:ondrej/php
+RUN DEBIAN_FRONTEND=noninteractive apt update
+
+RUN DEBIAN_FRONTEND=noninteractive apt install -y php8.1 \
+    php8.1-mysql \
+    php8.1-curl \
+    php8.1-zip \
+    php8.1-bcmath \
+    php8.1-fpm \
+    php8.1-mbstring \
+    php8.1-common \
+    php8.1-xml \
+    php8.1-redis
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+ENV TARGETARCH=linux-arm64
+
+WORKDIR /azp
+VOLUME /opt
+
+COPY ../start.sh .
+RUN chmod +x start.sh
+
+ENTRYPOINT [ "./start.sh" ]

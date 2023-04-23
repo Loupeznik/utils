@@ -2,7 +2,13 @@
 
 ## zsh-setup
 
-Sets up zsh and oh-my-zsh for local user on a Debian-based system. To install, simply run the `zsh-setup.sh` script (as non-root user)
+Sets up zsh and oh-my-zsh for local user. To install, simply run the `zsh-setup.sh` script (as non-root user)
+
+Currently supported distributions:
+- Debian-based
+- Arch-based
+- RHEL-based
+- SUSE-based
 
 ### Installing without cloning the repo
 

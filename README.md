@@ -50,13 +50,3 @@ various scripts and tasks.
 ### flutter
 
 Collection of scripts to automate publishing of Flutter applications
-
-## Unmaintained or not very useful utilities
-
-### mwRenamer
-
-Python script for fixing CoD: Modern Warfare (2019) crashes. The issue causing the crashes has since been resolved, so this is kinda useless now.
-
-### nmap_scan
-
-Python script for nmap scanning operations. The script was never fully implemented and only serves some basic functions.

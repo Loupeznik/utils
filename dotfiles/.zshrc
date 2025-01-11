@@ -84,13 +84,22 @@ alias duh="du -h"
 alias chromekys="pkill chrome"
 alias fixaudio="pulseaudio -k"
 alias sqlogin="sudo mysql -uroot"
-alias cfg="nano ~/.zshrc"
+alias cfg="vi ~/.zshrc"
 alias serve="php artisan serve"
 alias emulator="flutter emulators --launch Pixel_3a_API_30_x86"
 alias updates="sudo apt update && sudo apt list --upgradable"
 alias sshagent="eval '$(ssh-agent -s)'"
 alias c="code ."
 alias ap="ansible-playbook"
+alias x="exit"
+alias prd="pnpm run dev"
+alias prb="pnpm run build"
+alias nrd="npm run dev"
+alias nrb="npm run build"
+alias cdssh="cd ~/.ssh"
+alias whatsmyip="curl https://ipinfo.io/ip"
+alias cl="clear"
+alias pn="pnpm"
 
 # Apache2 aliases
 alias a2start="sudo service apache2 start"
@@ -105,3 +114,11 @@ alias fgrep='fgrep --color=auto'
 
 # Disable .NET Telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+# fnm
+FNM_PATH="/home/cc/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/cc/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi

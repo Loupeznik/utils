@@ -97,9 +97,9 @@ alias prb="pnpm run build"
 alias nrd="npm run dev"
 alias nrb="npm run build"
 alias cdssh="cd ~/.ssh"
-alias whatsmyip="curl https://ipinfo.io/ip"
 alias cl="clear"
 alias pn="pnpm"
+alias whatsmyip="curl ifconfig.me"
 
 # Apache2 aliases
 alias a2start="sudo service apache2 start"

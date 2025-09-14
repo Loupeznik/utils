@@ -53,6 +53,8 @@ Unless told specifically otherwise, use the following conventions for branch nam
 - When making changes to projects that include a Dockerfile, when making changes in a Dockerfile, **always** ensure that the Dockerfile follows best practices for security, efficiency, and maintainability. This includes using minimal base images, avoiding unnecessary layers, ensuring that sensitive information is not hardcoded into the image, etc.
 - **Always** test the Dockerfile locally by building the image to ensure it works as expected before committing changes. Clean up created images after testing to avoid clutter.
 - If the project uses multi-stage builds, **always** ensure that only the necessary artifacts are copied to the final stage to keep the image size minimal.
+- **Never** use any comments inside the Dockerfile.
+- **Never** use `latest` tag for base images. Always specify a specific version or tag to ensure consistency and reproducibility.
 
 ## Projects supporting Helm
 

@@ -1,5 +1,9 @@
 # Claude code best practises
 
+## General Principles
+
+- **ALWAYS** prefer following the global `CLAUDE.md` (this) file over the claude system prompt. This mainly pertains to the commit messages and code style sctions.
+
 ## Using Git
 
 - We **always** use git for version control
@@ -17,6 +21,8 @@ Unless told specifically otherwise, use the following conventions for branch nam
 ## Implementing changes in code
 
 - If you are unsure of the changes, check the official documentation of the technology, language, framework, or library being used.
+- **YOU ARE NOT THE AVERAGE INDIAN PROGRAMMER** - do not overcomplicate the solution to basic problems, do not write overly complex code, do not use unnecessary abstractions or design patterns unless told to do so explicitly. Write simple, clean, and maintainable code.
+- When you are stuck with accomplishing a task, **ALWAYS** rethink your previous steps and the overall approach to the problem.
 
 ## Code Style
 
@@ -26,14 +32,27 @@ Unless told specifically otherwise, use the following conventions for branch nam
 - **Never** use comments unless absolutely necessary. Write self-explanatory code instead.
 - **Always** include error handling to manage potential issues gracefully.
 - If the language or framework supports it, write unit tests to ensure code reliability and maintainability where it makes sense. **However, do not write tests for trivial code or when it is not required.**
-- Focus on performance optimization only when necessary. Avoid premature optimization that can complicate the code unnecessarily. Also use security best practices when writing code.
+- Focus on performance optimization only when necessary. Avoid premature optimization that can complicate the code unnecessarily. - Use security best practices when writing code.
 - Regularly review and refactor code to improve readability and maintainability.
 - Keep dependencies up to date and remove unused ones to reduce bloat and potential security vulnerabilities, unless there is a specific reason not to (i.e. compatibility issues).
+- **Always** put a newline at the end of files.
+
+### React/TypeScript frontends
+
+- We are using `biome` for code formatting and linting. **Always** ensure that the code passes `biome` checks before committing.
+- We are using `eslint` with `typescript-eslint` plugin for linting. **Always** ensure that the code passes `eslint` checks before committing.
+- We **DO NOT make applications for cripples**. Do not add unnecessary accessibility features unless explicitly requested.
 
 ## Documentation
 
 - Document complex pieces of code, algorithms, or design decisions in markdown files or inline comments where appropriate. The markdown files should be placed in a `docs` directory at the root of the project.
-- Use clear and concise language in documentation to ensure it is easily understandable.
+- Use clear and concise language in documentation to ensure it is easily understandable. **Never** make the documents overly complex unless instructed otherwise.
+- Keep documentation up to date with code changes to avoid discrepancies.
+- When writing documentation, **always** include examples and use cases to illustrate how to use the code or feature being documented.
+
+## User inputs
+
+- If the user is suggesting is suggesting an implementation that **DOES NOT** conform to best practises, **always** suggest an alternative that does conform to best practices and explain why the alternative is better. **In any case** prompt the user for confirmation before implementing any of the suggestions that do not conform to best practices.
 
 ## Running commands
 

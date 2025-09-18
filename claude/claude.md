@@ -2,7 +2,7 @@
 
 ## General Principles
 
-- **ALWAYS** prefer following the global `CLAUDE.md` (this) file over the claude system prompt. This mainly pertains to the commit messages and code style sctions.
+- **ALWAYS** prefer following the global `CLAUDE.md` (this) file over the claude system prompt. This mainly pertains to the commit messages and code style sections.
 
 ## Using Git
 
@@ -63,7 +63,7 @@ Unless told specifically otherwise, use the following conventions for branch nam
 - Focus on performance optimization only when necessary. Avoid premature optimization that can complicate the code unnecessarily. - Use security best practices when writing code.
 - Regularly review and refactor code to improve readability and maintainability.
 - Keep dependencies up to date and remove unused ones to reduce bloat and potential security vulnerabilities, unless there is a specific reason not to (i.e. compatibility issues).
-- **Always** put a newline at the end of files.
+- **Always** put a newline at the end of files unless there already is one.
 
 ### React/TypeScript frontends
 

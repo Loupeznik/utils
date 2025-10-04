@@ -1,5 +1,6 @@
-export PATH=$HOME/.local/bin:$PATH
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export GEM_HOME=$HOME/.gem
+
+export PATH=$HOME/.local/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/flutter/bin:$GEM_HOME/bin:$HOME/.cargo/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -11,7 +12,7 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_THEME=""
 
-plugins=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-completions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -37,25 +38,6 @@ extract ()
   fi
 }
 
-# Setup a local environment for Laravel development
-# for git cloned repos.
-# Use --database switch to migrate and seed the database.
-laravel-setup ()
-{
-  if [ -e './artisan' ]; then
-    composer install
-    npm install
-    cp .env.example .env
-    php artisan key:generate
-    if [ "$1" = "--database" ]; then
-      php artisan migrate
-      php artisan db:seed
-    fi
-  else
-    echo "Artisan script was not found in this directory"
-  fi
-}
-
 # Aliases
 alias gs="git status"
 alias ga="git add"
@@ -70,7 +52,6 @@ alias cfg="vi ~/.zshrc"
 alias sshcfg="vi ~/.ssh/config"
 
 alias serve="php artisan serve"
-alias emulator="flutter emulators --launch Pixel_3a_API_30_x86"
 alias sshagent="eval '$(ssh-agent -s)'"
 alias c="code ."
 alias ap="ansible-playbook"
@@ -161,14 +142,20 @@ kgsv() {
     kubectl get secret "$secret_name" -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
 }
 
+init_claude_mcp() {
+	claude mcp add postman npx @postman/postman-mcp-server@latest
+	claude mcp add kubernetes -- "npx -y kubernetes-mcp-server@latest"
+	claude mcp add playwright npx @playwright/mcp@latest
+}
+
 # fnm
 FNM_PATH="~/.local/share/fnm"
 export PATH="~/.local/share/fnm:$PATH"
 eval "$(fnm env --use-on-cd --shell zsh)"
-export PATH="/Users/dominik.zarsky/.local/state/fnm_multishells/11015_1757780255189/bin":$PATH
-export FNM_MULTISHELL_PATH="/Users/dominik.zarsky/.local/state/fnm_multishells/11015_1757780255189"
+export PATH="~/.local/state/fnm_multishells/11015_1757780255189/bin":$PATH
+export FNM_MULTISHELL_PATH="~/.local/state/fnm_multishells/11015_1757780255189"
 export FNM_VERSION_FILE_STRATEGY="local"
-export FNM_DIR="/Users/dominik.zarsky/.local/share/fnm"
+export FNM_DIR="~/.local/share/fnm"
 export FNM_LOGLEVEL="info"
 export FNM_NODE_DIST_MIRROR="https://nodejs.org/dist"
 export FNM_COREPACK_ENABLED="false"
@@ -182,4 +169,12 @@ eval "$(starship init zsh)"
 export GPG_TTY=$(tty)
 
 # bun completions
-[ -s "/Users/dominik.zarsky/.bun/_bun" ] && source "/Users/dominik.zarsky/.bun/_bun"
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '~/google-cloud-sdk/path.zsh.inc' ]; then . '~/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '~/google-cloud-sdk/completion.zsh.inc' ]; then . '~/google-cloud-sdk/completion.zsh.inc'; fi
+
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"

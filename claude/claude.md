@@ -118,6 +118,9 @@ Unless told specifically otherwise, use the following conventions for branch nam
 
 - When making changes to projects that include Helm charts, **always** ensure that the Helm chart follows best practices for Kubernetes deployments. This includes using appropriate resource requests and limits, configuring liveness and readiness probes, and following security best practices.
 - **Always** test the Helm chart locally using tools like `helm lint` and `helm template` to validate the chart's syntax and structure before committing changes.
+- When creating helm charts, **always** use the `IfNotPresent` image pull policy and avoid using `latest` tags for container images to ensure consistency and reproducibility.
+- When creating helm charts, **always** use values files to manage configuration and avoid hardcoding values in the templates.
+- When creating helm charts, **always** include a `README.md` file in the chart directory to document the chart's purpose, usage, and configuration options.
 
 ## CI/CD
 

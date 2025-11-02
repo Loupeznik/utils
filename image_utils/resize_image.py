@@ -10,8 +10,9 @@ def resize_image(input_path, output_path, width=None, height=None, percentage=No
     try:
         img = Image.open(input_path)
 
-        if img.format != 'PNG':
-            print(f"Error: Input file is not a PNG image (format: {img.format})")
+        if img.format not in ['PNG', 'JPEG', 'WEBP']:
+            print(f"Error: Unsupported image format: {img.format}")
+            print("Supported formats: PNG, JPG, WEBP")
             return False
 
         original_width, original_height = img.size
@@ -33,7 +34,18 @@ def resize_image(input_path, output_path, width=None, height=None, percentage=No
             return False
 
         resized_img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
-        resized_img.save(output_path, 'PNG')
+
+        output_format = img.format
+        if output_format == 'JPEG' and resized_img.mode in ('RGBA', 'LA', 'P'):
+            resized_img = resized_img.convert('RGB')
+
+        save_kwargs = {}
+        if output_format == 'JPEG':
+            save_kwargs['quality'] = 95
+        elif output_format == 'WEBP':
+            save_kwargs['quality'] = 95
+
+        resized_img.save(output_path, output_format, **save_kwargs)
 
         print(f"Image resized from {original_width}x{original_height} to {new_width}x{new_height}")
         print(f"Saved to: {output_path}")
@@ -49,23 +61,23 @@ def resize_image(input_path, output_path, width=None, height=None, percentage=No
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Resize PNG images by dimensions or percentage',
+        description='Resize images (PNG, JPG, WEBP) by dimensions or percentage',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog='''
 Examples:
   %(prog)s input.png -p 50                    # Resize to 50%% of original size
-  %(prog)s input.png -w 800                   # Resize to width 800px, maintain aspect ratio
-  %(prog)s input.png -h 600                   # Resize to height 600px, maintain aspect ratio
-  %(prog)s input.png -w 800 -h 600            # Resize to exact dimensions
-  %(prog)s input.png -p 75 -o output.png      # Resize to 75%% and save to output.png
+  %(prog)s input.jpg -w 800                   # Resize to width 800px, maintain aspect ratio
+  %(prog)s input.webp -H 600                  # Resize to height 600px, maintain aspect ratio
+  %(prog)s input.png -w 800 -H 600            # Resize to exact dimensions
+  %(prog)s input.jpg -p 75 -o output.jpg      # Resize to 75%% and save to output.jpg
         '''
     )
 
-    parser.add_argument('input', type=str, help='Input PNG file path')
+    parser.add_argument('input', type=str, help='Input image file path (PNG, JPG, or WEBP)')
     parser.add_argument('-w', '--width', type=int, help='New width in pixels')
     parser.add_argument('-H', '--height', type=int, help='New height in pixels')
     parser.add_argument('-p', '--percentage', type=float, help='Resize percentage (e.g., 50 for 50%%)')
-    parser.add_argument('-o', '--output', type=str, help='Output file path (default: input_resized.png)')
+    parser.add_argument('-o', '--output', type=str, help='Output file path (default: input_resized.<ext>)')
 
     args = parser.parse_args()
 

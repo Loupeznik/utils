@@ -14,7 +14,7 @@ pip install -r requirements.txt
 
 ### resize_image.py
 
-Resize PNG images by dimensions or percentage.
+Resize images (PNG, JPG, WEBP) by dimensions or percentage. Output format matches input format.
 
 **Usage:**
 
@@ -27,25 +27,25 @@ Resize PNG images by dimensions or percentage.
 - `-w, --width WIDTH` - New width in pixels
 - `-H, --height HEIGHT` - New height in pixels
 - `-p, --percentage PERCENTAGE` - Resize percentage (e.g., 50 for 50%)
-- `-o, --output OUTPUT` - Output file path (default: input_resized.png)
+- `-o, --output OUTPUT` - Output file path (default: input_resized.{ext})
 
 **Examples:**
 
 ```bash
-# Resize to 50% of original size
+# Resize PNG to 50% of original size
 ./resize_image.py input.png -p 50
 
-# Resize to width 800px, maintain aspect ratio
-./resize_image.py input.png -w 800
+# Resize JPG to width 800px, maintain aspect ratio
+./resize_image.py input.jpg -w 800
 
-# Resize to height 600px, maintain aspect ratio
-./resize_image.py input.png -H 600
+# Resize WEBP to height 600px, maintain aspect ratio
+./resize_image.py input.webp -H 600
 
 # Resize to exact dimensions
 ./resize_image.py input.png -w 800 -H 600
 
 # Resize and save to custom output path
-./resize_image.py input.png -p 75 -o output.png
+./resize_image.py input.jpg -p 75 -o output.jpg
 ```
 
 ### convert_heic.py

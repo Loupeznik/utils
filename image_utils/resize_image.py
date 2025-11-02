@@ -65,46 +65,97 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog='''
 Examples:
-  %(prog)s input.png -p 50                    # Resize to 50%% of original size
-  %(prog)s input.jpg -w 800                   # Resize to width 800px, maintain aspect ratio
-  %(prog)s input.webp -H 600                  # Resize to height 600px, maintain aspect ratio
-  %(prog)s input.png -w 800 -H 600            # Resize to exact dimensions
-  %(prog)s input.jpg -p 75 -o output.jpg      # Resize to 75%% and save to output.jpg
+  %(prog)s input.png -p 50                         # Resize single file to 50%% of original size
+  %(prog)s input.jpg -w 800                        # Resize to width 800px, maintain aspect ratio
+  %(prog)s file1.png file2.jpg -p 50               # Resize multiple files
+  %(prog)s -d /path/to/images -p 50                # Resize all images in directory
+  %(prog)s -d /path/to/images -w 800 -o /out/dir   # Resize directory to output directory
         '''
     )
 
-    parser.add_argument('input', type=str, help='Input image file path (PNG, JPG, or WEBP)')
+    parser.add_argument('input', type=str, nargs='*', help='Input image file path(s)')
+    parser.add_argument('-d', '--directory', type=str, help='Process all images in directory')
     parser.add_argument('-w', '--width', type=int, help='New width in pixels')
     parser.add_argument('-H', '--height', type=int, help='New height in pixels')
     parser.add_argument('-p', '--percentage', type=float, help='Resize percentage (e.g., 50 for 50%%)')
-    parser.add_argument('-o', '--output', type=str, help='Output file path (default: input_resized.<ext>)')
+    parser.add_argument('-o', '--output', type=str, help='Output file/directory path')
 
     args = parser.parse_args()
 
-    input_path = Path(args.input)
-
-    if not input_path.exists():
-        print(f"Error: Input file does not exist: {input_path}")
+    if args.percentage and (args.width or args.height):
+        print("Error: Cannot specify both percentage and dimensions")
         sys.exit(1)
 
-    if args.output:
-        output_path = Path(args.output)
-    else:
-        output_path = input_path.parent / f"{input_path.stem}_resized{input_path.suffix}"
-
-    if args.percentage:
-        if args.width or args.height:
-            print("Error: Cannot specify both percentage and dimensions")
-            sys.exit(1)
-        success = resize_image(input_path, output_path, percentage=args.percentage)
-    elif args.width or args.height:
-        success = resize_image(input_path, output_path, width=args.width, height=args.height)
-    else:
+    if not (args.percentage or args.width or args.height):
         print("Error: Must specify either --percentage, --width, or --height")
         parser.print_help()
         sys.exit(1)
 
-    sys.exit(0 if success else 1)
+    input_files = []
+    output_dir = None
+
+    if args.directory:
+        dir_path = Path(args.directory)
+        if not dir_path.exists() or not dir_path.is_dir():
+            print(f"Error: Directory does not exist: {dir_path}")
+            sys.exit(1)
+
+        for ext in ['*.png', '*.jpg', '*.jpeg', '*.webp', '*.PNG', '*.JPG', '*.JPEG', '*.WEBP']:
+            input_files.extend(dir_path.glob(ext))
+
+        if not input_files:
+            print(f"No valid image files found in directory: {dir_path}")
+            sys.exit(1)
+
+        if args.output:
+            output_dir = Path(args.output)
+            output_dir.mkdir(parents=True, exist_ok=True)
+
+    elif args.input:
+        input_files = [Path(f) for f in args.input]
+        for f in input_files:
+            if not f.exists():
+                print(f"Error: File does not exist: {f}")
+                sys.exit(1)
+    else:
+        print("Error: Must specify input file(s) or --directory")
+        parser.print_help()
+        sys.exit(1)
+
+    if args.output and not args.directory and len(input_files) > 1:
+        print("Error: Cannot specify single output path for multiple input files")
+        sys.exit(1)
+
+    success_count = 0
+    fail_count = 0
+
+    print(f"Processing {len(input_files)} file(s)...\n")
+
+    for input_path in input_files:
+        print(f"Processing: {input_path.name}")
+
+        if args.output:
+            if output_dir:
+                output_path = output_dir / f"{input_path.stem}_resized{input_path.suffix}"
+            else:
+                output_path = Path(args.output)
+        else:
+            output_path = input_path.parent / f"{input_path.stem}_resized{input_path.suffix}"
+
+        if args.percentage:
+            success = resize_image(input_path, output_path, percentage=args.percentage)
+        else:
+            success = resize_image(input_path, output_path, width=args.width, height=args.height)
+
+        if success:
+            success_count += 1
+        else:
+            fail_count += 1
+
+        print()
+
+    print(f"Summary: {success_count} succeeded, {fail_count} failed")
+    sys.exit(0 if fail_count == 0 else 1)
 
 
 if __name__ == '__main__':

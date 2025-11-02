@@ -38,36 +38,85 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog='''
 Examples:
-  %(prog)s input.heic                         # Convert to PNG (default)
-  %(prog)s input.heic -f jpg                  # Convert to JPG
-  %(prog)s input.heic -o output.png           # Convert to PNG with custom output path
-  %(prog)s input.heic -f jpg -o output.jpg    # Convert to JPG with custom output path
+  %(prog)s input.heic                              # Convert to PNG (default)
+  %(prog)s input.heic -f jpg                       # Convert to JPG
+  %(prog)s file1.heic file2.heic -f jpg            # Convert multiple files
+  %(prog)s -d /path/to/images -f jpg               # Convert all HEIC files in directory
+  %(prog)s -d /path/to/images -o /out/dir -f jpg   # Convert directory to output directory
         '''
     )
 
-    parser.add_argument('input', type=str, help='Input HEIC file path')
+    parser.add_argument('input', type=str, nargs='*', help='Input HEIC file path(s)')
+    parser.add_argument('-d', '--directory', type=str, help='Process all HEIC files in directory')
     parser.add_argument('-f', '--format', type=str, choices=['png', 'jpg', 'PNG', 'JPG'],
                         default='png', help='Output format (default: png)')
-    parser.add_argument('-o', '--output', type=str, help='Output file path (default: input.<format>)')
+    parser.add_argument('-o', '--output', type=str, help='Output file/directory path')
 
     args = parser.parse_args()
 
-    input_path = Path(args.input)
+    output_format = args.format.lower()
+    input_files = []
+    output_dir = None
 
-    if not input_path.exists():
-        print(f"Error: Input file does not exist: {input_path}")
+    if args.directory:
+        dir_path = Path(args.directory)
+        if not dir_path.exists() or not dir_path.is_dir():
+            print(f"Error: Directory does not exist: {dir_path}")
+            sys.exit(1)
+
+        for ext in ['*.heic', '*.HEIC']:
+            input_files.extend(dir_path.glob(ext))
+
+        if not input_files:
+            print(f"No HEIC files found in directory: {dir_path}")
+            sys.exit(1)
+
+        if args.output:
+            output_dir = Path(args.output)
+            output_dir.mkdir(parents=True, exist_ok=True)
+
+    elif args.input:
+        input_files = [Path(f) for f in args.input]
+        for f in input_files:
+            if not f.exists():
+                print(f"Error: File does not exist: {f}")
+                sys.exit(1)
+    else:
+        print("Error: Must specify input file(s) or --directory")
+        parser.print_help()
         sys.exit(1)
 
-    output_format = args.format.lower()
+    if args.output and not args.directory and len(input_files) > 1:
+        print("Error: Cannot specify single output path for multiple input files")
+        sys.exit(1)
 
-    if args.output:
-        output_path = Path(args.output)
-    else:
-        output_path = input_path.parent / f"{input_path.stem}.{output_format}"
+    success_count = 0
+    fail_count = 0
 
-    success = convert_heic(input_path, output_path, output_format)
+    print(f"Processing {len(input_files)} file(s)...\n")
 
-    sys.exit(0 if success else 1)
+    for input_path in input_files:
+        print(f"Processing: {input_path.name}")
+
+        if args.output:
+            if output_dir:
+                output_path = output_dir / f"{input_path.stem}.{output_format}"
+            else:
+                output_path = Path(args.output)
+        else:
+            output_path = input_path.parent / f"{input_path.stem}.{output_format}"
+
+        success = convert_heic(input_path, output_path, output_format)
+
+        if success:
+            success_count += 1
+        else:
+            fail_count += 1
+
+        print()
+
+    print(f"Summary: {success_count} succeeded, {fail_count} failed")
+    sys.exit(0 if fail_count == 0 else 1)
 
 
 if __name__ == '__main__':

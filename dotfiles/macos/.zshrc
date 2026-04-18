@@ -1,6 +1,15 @@
-export GEM_HOME=$HOME/.gem
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export PATH=$HOME/.local/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/flutter/bin:$GEM_HOME/bin:$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH=$HOME/flutter/bin:$PATH
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/bin:$PATH
+export PATH="$(go env GOPATH)/bin:$PATH"
+
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -12,9 +21,11 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_THEME=""
 
-plugins=(git zsh-completions zsh-syntax-highlighting)
+plugins=(git zsh-completions zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+
+export OPENCODE_DISABLE_DEFAULT_PLUGINS=true
 
 extract ()
 {
@@ -42,7 +53,6 @@ extract ()
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
-alias gp="git pull"
 alias grs="git reset --soft HEAD~1"
 
 alias home="cd ~"
@@ -65,6 +75,7 @@ alias cl="clear"
 alias pn="pnpm"
 alias whatsmyip="curl ifconfig.me"
 alias python="python3"
+alias claude="npx @anthropic-ai/claude-code"
 
 alias dev="cd ~/dev"
 alias h='helm'
@@ -148,6 +159,12 @@ init_claude_mcp() {
 	claude mcp add playwright npx @playwright/mcp@latest
 }
 
+fix_bl_git() {
+	git config user.name "Dominik Zarsky"
+	git config user.email dominik.zarsky@blogic.cz
+    git config user.signingkey 15EC160C0EB80178
+}
+
 # fnm
 FNM_PATH="~/.local/share/fnm"
 export PATH="~/.local/share/fnm:$PATH"
@@ -172,9 +189,33 @@ export GPG_TTY=$(tty)
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '~/.google-cloud-sdk/path.zsh.inc' ]; then . '~/.google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '~/google-cloud-sdk/path.zsh.inc' ]; then . '~/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '~/.google-cloud-sdk/completion.zsh.inc' ]; then . '~/.google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '~/google-cloud-sdk/completion.zsh.inc' ]; then . '~/google-cloud-sdk/completion.zsh.inc'; fi
 
-export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/opt/mysql-client/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(~/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# >>> kubeconfig-manager shell hook >>>
+# Managed by kubeconfig-manager. Do not edit between the fence markers.
+# To remove: kubeconfig-manager uninstall-shell-hook
+kcm() {
+    case "$1" in
+        use|tui)
+            eval "$(command kubeconfig-manager "$@" --shell=zsh)"
+            ;;
+        *)
+            command kubeconfig-manager "$@"
+            ;;
+    esac
+}
+alias kubectl='command kubeconfig-manager kubectl'
+# <<< kubeconfig-manager shell hook <<<

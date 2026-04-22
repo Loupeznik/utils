@@ -22,15 +22,15 @@
 
 ```shell
 # ❌ BAD - too long, multi-line, unnecessary details
-git commit -m "Complete OpenTelemetry observability stack implementation                         
+git commit -m "Complete OpenTelemetry observability stack implementation
 
-- Add custom Loki log handler for automatic log forwarding                                       
-- Implement comprehensive trace collection for HTTP, database and cache operations               
+- Add custom Loki log handler for automatic log forwarding
+- Implement comprehensive trace collection for HTTP, database and cache operations
 - Add test routes for observability validation (/test-observability, /test-error, /test-database)
-- Configure database query instrumentation with detailed metrics                                 
-- Implement cache operation tracing with hit/miss/write operations                               
-- Update environment configuration for Loki integration                                          
-- Remove placeholder Redis and queue instrumentation (not currently used)                        
+- Configure database query instrumentation with detailed metrics
+- Implement cache operation tracing with hit/miss/write operations
+- Update environment configuration for Loki integration
+- Remove placeholder Redis and queue instrumentation (not currently used)
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
@@ -91,6 +91,8 @@ Unless told specifically otherwise, use the following conventions for branch nam
 - When creating scripts, **always** include error handling to manage potential issues gracefully.
 - When creating scripts, **always** include comments to explain the purpose and functionality of the script.
 - When creating scripts, **always** include usage instructions and examples in the script header comments.
+- When writing or editing a bash script, **ALWAYS** run `bash -n <file>` to syntax-check it before reporting the task complete. Do this as the final step, every time.
+- **ALWAYS** write bash scripts that are portable to bash 3.2, because macOS ships bash 3.2 by default. Do NOT use bash 4+ only features such as `${var,,}` / `${var^^}` case conversion, associative arrays (`declare -A`), `readarray` / `mapfile`, or `&>>`. Use portable equivalents (`tr '[:upper:]' '[:lower:]'`, regex match `[[ $x =~ ^[Yy] ]]`, `while IFS= read -r line`, etc.).
 
 ## Running commands
 
